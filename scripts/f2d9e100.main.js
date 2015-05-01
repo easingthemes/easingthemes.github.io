@@ -1,1 +1,0 @@
-jQuery(document).ready(function(a){a.ajax({url:fb+"q="+query+"&type="+type+"&center="+center+"&distance="+distance+"&access_token="+access_token+"|"+secret}).done(function(a){console.log(a)}).fail(function(){console.log("error")}).always(function(){console.log("complete")})});
