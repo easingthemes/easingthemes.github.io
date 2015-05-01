@@ -330,6 +330,13 @@ module.exports = function (grunt) {
           dest: '<%= config.dist %>/.htaccess'
         }]
       },
+      html: {
+        expand: true,
+        dot: true,
+        cwd: '<%= config.app %>',
+        dest: '<%= config.dist %>',
+        src: 'index.html'
+      },
       styles: {
         expand: true,
         dot: true,
