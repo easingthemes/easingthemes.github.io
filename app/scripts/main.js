@@ -29,10 +29,8 @@ jQuery(document).ready(function($) {
   var loopsArr = [];
   //var users = 0;
   //var usersArr = [];
-  //var usersEventArr = [];
+  var usersEventArr = [];
   var aaa = {};
-  var totalw = 0;
-	var countw = 0;
   var userEvents = function (userId) {
   	//console.log('userEvents');
   	/*jshint camelcase: false */
@@ -46,36 +44,30 @@ jQuery(document).ready(function($) {
 		      		//users = data.length;
 		      		//usersArr.push(data.length);
 		      		//console.log(users);
-		      		//var usersEventObj = {};
-		      		totalw = data.length;
-					countw = 0;
+		      		var usersEventObj = {};
+  					
 		      		for (var i = 0; i < data.length; i++) {
-		      			//usersEventObj = {};
-		      			// countResponse ++;
-		      			// aaa.count = countResponse;
-		      			// usersEventObj.users = users;
-		      			// usersEventObj.id = userId;
-		      			// usersEventObj.i = i;
-		      			// usersEventObj.count = countResponse;
-		      			// usersEventArr.push(usersEventObj);
-		      			(function(){
-					        events(data[i].id);
-					    }(i));
-		      			//events(data[i].id);
+		      			// usersEventObj = {};
+
+		      			countResponse ++;
+
+		      			usersEventObj.users = data.length;
+		      			usersEventObj.id = userId;
+		      			usersEventObj.i = i;
+		      			usersEventObj.count = countResponse;
+
+		      			usersEventArr.push(usersEventObj);
+		      			
+		      			events(data[i].id);
 		      			
 		      		}
-		      		jQuery('#fb-loop').trigger('fb:events', [aaa]);
+
 		      	}
 		      } 
 		    }
 		);
 	};
-	function done() {
-	    console.log('All data has been loaded :).');
-	}
-	// function eventsResponse(eventId) {
-
-	// }
+	
 	var events = function (eventId) {
 		//get event by event ID
 		FB.api(
@@ -100,15 +92,14 @@ jQuery(document).ready(function($) {
 				      	allEventsArr.push({'info': info});	
 
 				      	countResponse ++;
-				      	countw ++;
-					    if (countw > totalw - 1) {
-					    	done();
-					    }
+
 				      	countArr.push(countResponse);
 		      			aaa.count = countResponse;
 
 		      			jQuery('#fb-loop').trigger('fb:loops', [countArr]);
-				      	// jQuery('#fb-loop').trigger('fb:events', [aaa]);	      	
+				      	jQuery('#fb-loop').trigger('fb:events', [aaa]);	  
+
+				      	jQuery('#fb-loop').trigger('log:data', [usersEventArr]);    	
 				      }
 				    }
 				);
@@ -169,22 +160,59 @@ jQuery(document).ready(function($) {
 		getPlaces();
 	});
 	var ende = 0;
+	var tr = [];
+	var logData = function (e, data) {
+		tr = [];
+		for (var i = 0; i < data.length; i++) {
+			var dataId = data[i].id;
+			for (var j = i + 1; j < data.length; j++) {
+				if (dataId === data[j].id) {
+					data.splice(j, 1);
+				}
+			}
+			tr[i] = data[i];
+			//sum += data[i].users;
+		}
+		//console.log(tr);
+		jQuery('#fb-loop').trigger('fb:check', [tr]);
+		
+		//console.log('count: ' + data[data.length - 1].count);
+
+		
+	};
+	
+
 	var bindLoop = function (e, data) {
-		console.log(data);
+		//console.log(data);
 		ende = data.length;
 	};
 	var bindEvents = function (e, data) {
-		console.log(data);
+		//console.log(data);
 		if (data.count === ende) {
-			console.log('lasttttt');
+			//console.log('lasttttt');
 		}
 	};
+	var sum = 0;
+	var ggg = 0;
+	var check = function (e, data) {
+		sum = 0;
+		ggg = 0;
+		//console.log(data);
+		for (var k = 0; k < data.length; k++) {
+			sum += data[k].users;
+		 }
+		 ggg = data[data.length - 1].count;
+		 console.log('sum: ' + sum);
+		 console.log('ggg: ' + ggg);
+	};
+	$('#fb-loop').bind('fb:check', check);
 	$('#fb-loop').bind('fb:events', bindEvents);
 	$('#fb-loop').bind('fb:loops', bindLoop);
+	$('#fb-loop').bind('log:data', logData);
 	// $('#fb-root').bind('fb:loops', bindLoop);
 	// $('#fb-root').unbind('fb:loops', bindLoop);
 	$('#fb-root').bind('fb:last', function (e, usersArr) {
-		console.log(usersArr);
+		//console.log(usersArr);
 		var sum = 0;
 		for (var i = 0; i < usersArr.length; i++) {
 			sum += usersArr[i];
