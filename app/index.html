@@ -20,30 +20,70 @@
 
   </head>
   <body>
+  <div id="fb-loop"></div>
+  <div id="fb-root"></div>
+      <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '605157829620558',
+          xfbml      : true,
+          version    : 'v2.3'
+        });
+        jQuery('#fb-root').trigger('facebook:init');
+      };
+      
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
     <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-
+<div id="events0">
+      
+</div>
     <div class="hero-unit">
-      <h1>'Allo, 'Allo! Subtree 2</h1>
-      <p>You now have</p>
-      <ul>
-      <li>HTML5 Boilerplate</li>
-      <li>Sass</li>
-      <li><div
-  class="fb-like"
-  data-share="true"
-  data-width="450"
-  data-show-faces="true">
-</div></li>
+
+      <ul id="places">
+
       </ul>
+
+      <ul id="events">
+
+      </ul>
+
     </div>
 
-
+  <script  id="placesTemplate" type="text/template">
+    {{#places}}
+      <li id="{{info.id}}">
+          <p> Id: {{info.id}}</p>
+          <p> Time: {{info.name}}</p>
+          <p> Host: {{info.street}}</p>
+          <p> Title: {{info.located}}</p>
+      </li>
+    {{/places}}  
+  </script>
+  <script  id="eventsTemplate" type="text/template">
+    {{#events}}
+      <li id="{{info.id}}">
+          <div><p> Id: {{info.id}}</p>
+          <p> Time: {{info.time}}</p>
+          <p> Host: {{info.host}}</p>
+          <p> Title: {{info.title}}</p></div>
+          <img src="{{info.src}}">
+      </li>
+    {{/events}}  
+  </script>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/mustache.js/mustache.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -57,22 +97,9 @@
       ga('create','UA-42640542-4');ga('send','pageview');
     </script>
 
-    <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '605157829620558',
-          xfbml      : true,
-          version    : 'v2.3'
-        });
-      };
 
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "//connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
+    <script type="text/javascript">
+
     </script>
         <!-- build:js({app,.tmp}) scripts/main.js -->
         <script src="scripts/main.js"></script>

@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "jquery": "~1.11.1",
-    "modernizr": "~2.8.2"
+    "modernizr": "~2.8.2",
+    "mustache.js": "~2.0.0"
   }
 }
