@@ -36,8 +36,8 @@ module.exports = function (grunt) {
         tasks: ['wiredep']
       },
       js: {
-        files: ['<%= config.app %>/scripts/{,*/}*.js'],
-        tasks: ['jshint'],
+        files: ['<%= config.app %>/scripts/{,*/}*.js', '!<%= config.app %>/scripts/main.js'],
+        tasks: ['jshint', 'browserify:watch'],
         options: {
           livereload: true
         }
@@ -68,7 +68,28 @@ module.exports = function (grunt) {
         ]
       }
     },
-
+    browserify: {
+      dist: {
+        files: {
+          '<%= config.dist %>/scripts/main.js': '<%= config.app %>/scripts/app.js'
+        },
+        options: {
+          browserifyOptions: {
+            debug: true
+          },
+          watch: true
+        }
+      },
+      watch: {
+        files: {
+          '<%= config.app %>/scripts/main.js': '<%= config.app %>/scripts/app.js'
+        },
+        options: {
+          browserifyOptions: {debug: true},
+          watch: true
+        }
+      }
+    },
     // The actual grunt server settings
     connect: {
       options: {
@@ -136,6 +157,7 @@ module.exports = function (grunt) {
         'Gruntfile.js',
         '<%= config.app %>/scripts/{,*/}*.js',
         '!<%= config.app %>/scripts/vendor/*',
+        '!<%= config.app %>/scripts/main.js',
         'test/spec/{,*/}*.js'
       ]
     },
