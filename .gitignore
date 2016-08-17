@@ -1,4 +1,17 @@
+# Don't check auto-generated stuff into git
+coverage
 node_modules
-.tmp
-.sass-cache
+/bower_components
+/bower_components/
 bower_components
+stats.json
+
+# Cruft
+.DS_Store
+npm-debug.log
+.idea
+
+# Source template
+/html-template/
+html-template
+
