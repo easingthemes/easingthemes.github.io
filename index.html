@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dragan Filipović — Agentic workflows for enterprise platforms</title>
+<meta name="description" content="I build agentic AI workflows for enterprise platforms — AI agents that operate Adobe Experience Manager as production systems across 100+ markets, serving millions of users.">
+<meta name="author" content="Dragan Filipović">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dragan Filipović — Agentic workflows for enterprise platforms">
+<meta property="og:description" content="AI agents that operate Adobe Experience Manager as production systems. 1,300+ GitHub stars · 3 Adobe-distributed SDKs · 57 MCP tools · 78 AI skills.">
+<meta property="og:url" content="https://easingthemes.github.io/">
+<meta name="twitter:card" content="summary">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg:        #07090a;
+    --bg-soft:   #0c0f11;
+    --panel:     #0f1316;
+    --line:      #1c2226;
+    --line-soft: #161b1f;
+    --fg:        #e6ebe8;
+    --fg-dim:    #8a9590;
+    --fg-faint:  #525c58;
+    --accent:    #b8ff3c;
+    --accent-dim:#7fa83a;
+    --cyan:      #5fd6c8;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    --sans: 'IBM Plex Sans', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* dotted grid + scanline atmosphere */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(184,255,60,0.05) 1px, transparent 0);
+    background-size: 38px 38px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0,0,0,0) 0px,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,0.18) 3px,
+      rgba(0,0,0,0) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 2;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- top status bar ---------- */
+  .statusbar {
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--fg-dim);
+    background: rgba(7,9,10,0.7);
+    backdrop-filter: blur(6px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .statusbar .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 46px;
+  }
+  .status-left { display: flex; align-items: center; gap: 10px; }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent), 0 0 4px var(--accent);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.4; transform: scale(0.82); }
+  }
+  .status-right { color: var(--fg-faint); }
+  .status-right b { color: var(--fg-dim); font-weight: 500; }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 92px 0 64px; }
+
+  .kicker {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent-dim);
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .kicker::before {
+    content: "";
+    width: 36px; height: 1px;
+    background: var(--accent-dim);
+  }
+
+  h1 {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: clamp(2.4rem, 6.2vw, 4.4rem);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+    margin-bottom: 28px;
+  }
+  h1 .accent { color: var(--accent); }
+  h1 .cursor {
+    display: inline-block;
+    width: 0.5ch;
+    background: var(--accent);
+    color: transparent;
+    animation: blink 1.1s steps(1) infinite;
+    margin-left: 2px;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .lede {
+    font-size: clamp(1.05rem, 2.1vw, 1.32rem);
+    color: var(--fg-dim);
+    max-width: 620px;
+    font-weight: 300;
+  }
+  .lede b { color: var(--fg); font-weight: 500; }
+
+  .hero-name {
+    font-family: var(--mono);
+    margin-top: 38px;
+    font-size: 14px;
+    color: var(--fg-faint);
+    letter-spacing: 0.04em;
+  }
+  .hero-name b { color: var(--fg); font-weight: 600; }
+
+  /* ---------- stats strip ---------- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--panel);
+    margin-bottom: 96px;
+  }
+  .stat {
+    padding: 26px 24px;
+    border-right: 1px solid var(--line);
+    position: relative;
+  }
+  .stat:last-child { border-right: none; }
+  .stat .num {
+    font-family: var(--mono);
+    font-size: clamp(1.5rem, 3vw, 2.05rem);
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .stat .lbl {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+
+  /* ---------- section heading ---------- */
+  .sec { margin-bottom: 90px; }
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 36px;
+    border-bottom: 1px solid var(--line-soft);
+    padding-bottom: 16px;
+  }
+  .sec-head .idx {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent-dim);
+    letter-spacing: 0.1em;
+  }
+  .sec-head h2 {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+    color: var(--fg);
+    text-transform: uppercase;
+  }
+
+  /* ---------- projects ---------- */
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .proj {
+    background: var(--panel);
+    padding: 28px 26px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    transition: background 0.25s ease;
+  }
+  .proj:hover { background: var(--bg-soft); }
+  .proj::after {
+    content: "→";
+    position: absolute;
+    top: 26px; right: 26px;
+    font-family: var(--mono);
+    color: var(--fg-faint);
+    transition: transform 0.25s ease, color 0.25s ease;
+  }
+  .proj:hover::after { color: var(--accent); transform: translate(3px,-3px); }
+  .proj.featured { grid-column: span 2; }
+  .proj-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .proj-name {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 1.12rem;
+    color: var(--fg);
+    letter-spacing: -0.01em;
+  }
+  .proj-tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-dim);
+    border: 1px solid var(--line);
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+  .proj-desc { color: var(--fg-dim); font-size: 0.95rem; max-width: 56ch; }
+  .proj-meta {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--fg-faint);
+    letter-spacing: 0.03em;
+    margin-top: 2px;
+  }
+  .proj-meta b { color: var(--cyan); font-weight: 500; }
+
+  /* ---------- speaking list ---------- */
+  .talks { display: flex; flex-direction: column; }
+  .talk {
+    display: flex;
+    gap: 22px;
+    padding: 20px 4px;
+    border-bottom: 1px solid var(--line-soft);
+    align-items: baseline;
+    text-decoration: none;
+    color: inherit;
+    transition: padding-left 0.2s ease;
+  }
+  .talk:hover { padding-left: 12px; }
+  .talk:hover .talk-title { color: var(--accent); }
+  .talk-where {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent-dim);
+    min-width: 190px;
+    letter-spacing: 0.02em;
+  }
+  .talk-title { font-size: 1rem; color: var(--fg); transition: color 0.2s; }
+  .talk-title span { color: var(--fg-dim); }
+
+  /* ---------- footer ---------- */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 64px 0 80px;
+    background: var(--bg-soft);
+  }
+  .foot-grid { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; }
+  .foot-blurb { max-width: 420px; }
+  .foot-blurb .big {
+    font-family: var(--mono);
+    font-size: 1.3rem;
+    color: var(--fg);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .foot-blurb p { color: var(--fg-dim); font-size: 0.95rem; }
+  .links { display: flex; flex-direction: column; gap: 2px; }
+  .links a {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--fg-dim);
+    text-decoration: none;
+    padding: 7px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: color 0.2s, gap 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .links a:hover { color: var(--accent); gap: 18px; }
+  .links a .arr { color: var(--fg-faint); transition: color 0.2s; }
+  .links a:hover .arr { color: var(--accent); }
+  .colophon {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--fg-faint);
+    margin-top: 48px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------- entrance animation ---------- */
+  .reveal { opacity: 0; transform: translateY(14px); animation: rise 0.7s cubic-bezier(.2,.7,.2,1) forwards; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  @media (max-width: 720px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+    .projects { grid-template-columns: 1fr; }
+    .proj.featured { grid-column: span 1; }
+    .talk { flex-direction: column; gap: 4px; }
+    .talk-where { min-width: 0; }
+    .status-right { display: none; }
+    .hero { padding: 64px 0 48px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, body::after { animation: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="statusbar">
+    <div class="wrap">
+      <div class="status-left">
+        <span class="dot"></span>
+        <span>AGENT&nbsp;//&nbsp;ONLINE</span>
+      </div>
+      <div class="status-right">
+        <b>dragan.filipovic</b>&nbsp;~ Berlin · @Netcentric
+      </div>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="kicker reveal" style="animation-delay:.05s">Agentic workflows · AEM platform engineering · Enterprise AI</div>
+      <h1 class="reveal" style="animation-delay:.15s">
+        I build <span class="accent">agentic workflows</span><br>
+        for enterprise platforms<span class="cursor">_</span>
+      </h1>
+      <p class="lede reveal" style="animation-delay:.3s">
+        AI agents that operate <b>Adobe Experience Manager</b> — not as demos, but as
+        production systems running across <b>100+ markets</b> and serving <b>millions of users</b>.
+      </p>
+      <div class="hero-name reveal" style="animation-delay:.42s">
+        <b>Dragan Filipović</b> &nbsp;//&nbsp; Platform &amp; AI engineer
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="stats reveal" style="animation-delay:.5s">
+      <div class="stat"><div class="num">1,300+</div><div class="lbl">GitHub stars</div></div>
+      <div class="stat"><div class="num">3</div><div class="lbl">Adobe-distributed SDKs</div></div>
+      <div class="stat"><div class="num">57</div><div class="lbl">MCP tools</div></div>
+      <div class="stat"><div class="num">78</div><div class="lbl">AI skills</div></div>
+    </div>
+
+    <!-- WHAT I DO -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="idx">01</span>
+        <h2>What I actually do</h2>
+      </div>
+      <p class="lede" style="max-width:760px;">
+        I make enterprise platforms operable by AI agents — building the
+        <b>protocol layer</b> (MCP servers), the <b>orchestration layer</b> (multi-agent
+        workflows) and the <b>autonomous execution layer</b> (24/7 pipeline agents). My systems
+        handle the full development lifecycle — requirements → planning → code generation →
+        multi-phase verification → PR creation — designed for the constraints enterprises
+        actually have: governance, multi-environment deployments, team-scale coordination.
+      </p>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="idx">02</span>
+        <h2>Selected work</h2>
+      </div>
+      <div class="projects">
+        <a class="proj featured" href="https://github.com/easingthemes/aem-mcp-server" target="_blank" rel="noopener">
+          <div class="proj-top">
+            <span class="proj-name">aem-mcp-server</span>
+            <span class="proj-tag">Protocol layer</span>
+          </div>
+          <p class="proj-desc">57 MCP tools giving AI agents direct access to AEM — JCR content, components, dialogs, page operations. The interface between LLMs and enterprise CMS.</p>
+          <div class="proj-meta"><b>Model Context Protocol</b> · 57 tools</div>
+        </a>
+
+        <a class="proj featured" href="https://github.com/easingthemes/dx-aem-flow" target="_blank" rel="noopener">
+          <div class="proj-top">
+            <span class="proj-name">dx-aem-flow</span>
+            <span class="proj-tag">Orchestration layer</span>
+          </div>
+          <p class="proj-desc">78 skills, 13 agents, 3 plugins running identically across Claude Code, GitHub Copilot CLI and VS Code Chat. Full lifecycle from ticket to PR — config-driven, never hardcoded. Autonomous DoR/DoD, review, bug-fix and QA agents.</p>
+          <div class="proj-meta"><b>Multi-agent orchestration</b> · 78 skills · 13 agents</div>
+        </a>
+
+        <a class="proj" href="https://github.com/easingthemes/ssh-deploy" target="_blank" rel="noopener">
+          <div class="proj-top">
+            <span class="proj-name">ssh-deploy</span>
+            <span class="proj-tag">GitHub Action</span>
+          </div>
+          <p class="proj-desc">SSH/rsync deployments for CI/CD. Used across thousands of pipelines.</p>
+          <div class="proj-meta"><b>1,300+ stars</b> · 162 forks · 57 releases</div>
+        </a>
+
+        <a class="proj" href="https://github.com/easingthemes/mocker" target="_blank" rel="noopener">
+          <div class="proj-top">
+            <span class="proj-name">mocker</span>
+            <span class="proj-tag">Dev tooling</span>
+          </div>
+          <p class="proj-desc">Zero-config Node.js mock API server with a web GUI — file-based endpoints, dynamic params, response variations.</p>
+          <div class="proj-meta">Unblocks frontend teams waiting on backend APIs</div>
+        </a>
+
+        <a class="proj" href="https://github.com/adobe/aem-headless-client-js" target="_blank" rel="noopener">
+          <div class="proj-top">
+            <span class="proj-name">@adobe/aem-headless-client-js</span>
+            <span class="proj-tag">Adobe SDK</span>
+          </div>
+          <p class="proj-desc">Lead contributor to Adobe's official AEM Headless SDK for JavaScript/Node.js.</p>
+          <div class="proj-meta"><b>Adobe-distributed</b></div>
+        </a>
+
+        <a class="proj" href="https://github.com/nicklasnetcentric/fe-build" target="_blank" rel="noopener">
+          <div class="proj-top">
+            <span class="proj-name">fe-build</span>
+            <span class="proj-tag">Toolchain</span>
+          </div>
+          <p class="proj-desc">All-in-one frontend toolchain for AEM projects — standardized builds adopted as company-wide frontend standards at Netcentric.</p>
+          <div class="proj-meta">Company-wide adoption</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- SPEAKING -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="idx">03</span>
+        <h2>Speaking &amp; writing</h2>
+      </div>
+      <div class="talks">
+        <a class="talk" href="https://adapt.to/speakers/dragan-filipovic" target="_blank" rel="noopener">
+          <span class="talk-where">adaptTo() 2023</span>
+          <span class="talk-title">AEM Headless: A Glimpse of Developer Tools <span>— Europe's leading AEM conference</span></span>
+        </a>
+        <a class="talk" href="https://frontend.coffee" target="_blank" rel="noopener">
+          <span class="talk-where">Frontend Coffee Break</span>
+          <span class="talk-title">Episode #25 — Open Sourcing Our FE Build</span>
+        </a>
+        <a class="talk" href="https://www.netcentric.biz" target="_blank" rel="noopener">
+          <span class="talk-where">Netcentric Blog · 2025</span>
+          <span class="talk-title">AI-Driven Code Generation: AEM Component Development from Figma</span>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="wrap foot-grid">
+      <div class="foot-blurb">
+        <div class="big">Direction →</div>
+        <p>Expanding the surface area of what AI agents can operate in enterprise environments. More MCP servers, deeper orchestration, more autonomous pipelines — humans setting direction, agents handling execution.</p>
+      </div>
+      <nav class="links">
+        <a href="https://github.com/easingthemes" target="_blank" rel="noopener"><span class="arr">→</span> GitHub / easingthemes</a>
+        <a href="https://www.linkedin.com/in/draganfilipovic/" target="_blank" rel="noopener"><span class="arr">→</span> LinkedIn / draganfilipovic</a>
+        <a href="https://twitter.com/draganfill" target="_blank" rel="noopener"><span class="arr">→</span> Twitter / @draganfill</a>
+        <a href="https://frontenddot.com" target="_blank" rel="noopener"><span class="arr">→</span> frontenddot.com</a>
+      </nav>
+    </div>
+    <div class="wrap">
+      <div class="colophon">
+        © <span id="year">2026</span> Dragan Filipović · Berlin · built as a self-contained page · no trackers
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
