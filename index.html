@@ -10,7 +10,7 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Dragan Filipović — Agentic workflows for enterprise platforms">
-<meta property="og:description" content="AI agents that operate Adobe Experience Manager as production systems. 1,300+ GitHub stars · 3 Adobe-distributed SDKs · 57 MCP tools · 78 AI skills.">
+<meta property="og:description" content="AI agents that operate Adobe Experience Manager as production systems across 100+ markets, serving millions of users.">
 <meta property="og:url" content="https://easingthemes.github.io/">
 <meta name="twitter:card" content="summary">
 
@@ -176,40 +176,9 @@
   }
   .hero-name b { color: var(--fg); font-weight: 600; }
 
-  /* ---------- stats strip ---------- */
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    overflow: hidden;
-    background: var(--panel);
-    margin-bottom: 96px;
-  }
-  .stat {
-    padding: 26px 24px;
-    border-right: 1px solid var(--line);
-    position: relative;
-  }
-  .stat:last-child { border-right: none; }
-  .stat .num {
-    font-family: var(--mono);
-    font-size: clamp(1.5rem, 3vw, 2.05rem);
-    font-weight: 600;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 10px;
-  }
-  .stat .lbl {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--fg-dim);
-  }
-
   /* ---------- section heading ---------- */
   .sec { margin-bottom: 90px; }
+  .sec:first-of-type { margin-top: 24px; }
   .sec-head {
     display: flex;
     align-items: baseline;
@@ -366,9 +335,6 @@
   @keyframes rise { to { opacity: 1; transform: none; } }
 
   @media (max-width: 720px) {
-    .stats { grid-template-columns: repeat(2, 1fr); }
-    .stat:nth-child(2) { border-right: none; }
-    .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
     .projects { grid-template-columns: 1fr; }
     .proj.featured { grid-column: span 1; }
     .talk { flex-direction: column; gap: 4px; }
@@ -415,13 +381,6 @@
   </header>
 
   <div class="wrap">
-    <div class="stats reveal" style="animation-delay:.5s">
-      <div class="stat"><div class="num">1,300+</div><div class="lbl">GitHub stars</div></div>
-      <div class="stat"><div class="num">3</div><div class="lbl">Adobe-distributed SDKs</div></div>
-      <div class="stat"><div class="num">57</div><div class="lbl">MCP tools</div></div>
-      <div class="stat"><div class="num">78</div><div class="lbl">AI skills</div></div>
-    </div>
-
     <!-- WHAT I DO -->
     <section class="sec">
       <div class="sec-head">
@@ -433,8 +392,9 @@
         <b>protocol layer</b> (MCP servers), the <b>orchestration layer</b> (multi-agent
         workflows) and the <b>autonomous execution layer</b> (24/7 pipeline agents). My systems
         handle the full development lifecycle — requirements → planning → code generation →
-        multi-phase verification → PR creation — designed for the constraints enterprises
-        actually have: governance, multi-environment deployments, team-scale coordination.
+        multi-phase verification → PR creation → AEM content authoring → wiki documentation —
+        designed for the constraints enterprises actually have: governance, multi-environment
+        deployments, team-scale coordination.
       </p>
     </section>
 
